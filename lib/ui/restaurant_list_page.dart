@@ -10,12 +10,16 @@ class RestaurantListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('Restaurant App'),
+      ),
       body: FutureBuilder<String>(
         future: DefaultAssetBundle.of(context)
             .loadString('assets/local_restaurant.json'),
         builder: (context, snapshot) {
           final resto = parseRestaurants(snapshot.data);
           return ListView.builder(
+            padding: EdgeInsets.only(top: 10, bottom: 10),
             itemCount: resto.restaurants.length,
             itemBuilder: (context, index) {
               return _buildRestoItem(context, resto.restaurants[index]);
@@ -28,10 +32,11 @@ class RestaurantListPage extends StatelessWidget {
 
   Padding _buildRestoItem(BuildContext context, Restaurant resto) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 10.0),
+      padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 8.0),
       child: GestureDetector(
         onTap: () {
-          Navigator.pushNamed(context, RestaurantDetailPage.routeName, arguments: resto);
+          Navigator.pushNamed(context, RestaurantDetailPage.routeName,
+              arguments: resto);
         },
         child: SizedBox(
           height: 100,
